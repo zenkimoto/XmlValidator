@@ -2,7 +2,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class XmlValidatorTests {
     XmlValidator sut;
@@ -21,20 +21,20 @@ public class XmlValidatorTests {
     public void shouldValidateSimpleXml() {
         boolean result = sut.validate("<book></book>");
 
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
     public void shouldValidateInvalidXml_whenTagsDoNotMatch() {
         boolean result = sut.validate("<book></bool>");
 
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     @Test
     public void shouldIgnoreSpacesBeforeAndAfterTags() {
         boolean result = sut.validate("         <book>   </book>  ");
 
-        assertEquals(true, result);
+        assertTrue(result);
     }
 }

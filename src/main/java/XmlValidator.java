@@ -15,7 +15,7 @@ public class XmlValidator {
         List<String> tags = Arrays.asList(ar);
 
         return tags.stream()
-                .map(s -> s.trim())
+                .map(String::trim)
                 .map(s -> s.replaceFirst("<", ""))
                 .collect(Collectors.toList());
     }
