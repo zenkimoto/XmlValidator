@@ -37,4 +37,11 @@ public class XmlValidatorTests {
 
         assertTrue(result);
     }
+
+    @Test
+    public void shouldValidateTagsWithContent() {
+        boolean result = sut.validate("    <note>Hello World!</note> ");
+
+        assertTrue(result);
+    }
 }
