@@ -8,7 +8,7 @@ public class XmlValidator {
 
         debugPrintTokens(tags);
 
-        return tags.get(1).equals("/" + tags.get(0));
+        return tags.get(1).equals(tags.get(0).replace("<", "</"));
     }
 
     private void debugPrintTokens(List<String> tokens) {
