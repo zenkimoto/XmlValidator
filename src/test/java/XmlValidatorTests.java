@@ -18,13 +18,6 @@ public class XmlValidatorTests {
     }
 
     @Test
-    public void justAnExample() {
-        System.out.println("This test method should be run");
-
-        assertEquals(2, 2);
-    }
-
-    @Test
     public void shouldValidateSimpleXml() {
         boolean result = sut.validate("<book></book>");
 
@@ -36,5 +29,12 @@ public class XmlValidatorTests {
         boolean result = sut.validate("<book></bool>");
 
         assertEquals(false, result);
+    }
+
+    @Test
+    public void shouldIgnoreSpacesBeforeAndAfterTags() {
+        boolean result = sut.validate("         <book>   </book>  ");
+
+        assertEquals(true, result);
     }
 }
