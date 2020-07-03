@@ -8,26 +8,26 @@ public class XmlTokenizer {
 
         for (int i = 0; i < xml.length(); i++) {
             char ch = xml.charAt(i);
-            String token;
 
             switch (ch) {
                 case '<':
-                    token = xml.substring(index, i);
-                    if (token.trim().length() > 0) {
-                        tokens.add(token);
-                    }
+                    addTokenToTokenList(tokens, xml, index, i);
                     index = i;
                     break;
                 case '>':
-                    token = xml.substring(index, i + 1);
-                    if (token.trim().length() > 0) {
-                        tokens.add(token);
-                    }
+                    addTokenToTokenList(tokens, xml, index, i + 1);
                     index = i + 1;
                     break;
             }
         }
 
         return tokens;
+    }
+
+    private void addTokenToTokenList(ArrayList<String> tokens, String xml, int startIndex, int endIndex) {
+        String token = xml.substring(startIndex, endIndex);
+        if (token.trim().length() > 0) {
+            tokens.add(token);
+        }
     }
 }
