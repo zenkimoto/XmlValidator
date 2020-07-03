@@ -1,15 +1,33 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class XmlTokenizer {
     public List<String> parse(String xml) {
-        String[] ar = xml.trim().split(">");
-        List<String> tags = Arrays.asList(ar);
+        ArrayList<String> tokens = new ArrayList<>();
+        int index = 0;
 
-        return tags.stream()
-                .map(String::trim)
-                .map(s -> s + ">")
-                .collect(Collectors.toList());
+        for (int i = 0; i < xml.length(); i++) {
+            char ch = xml.charAt(i);
+            String token;
+
+            switch (ch) {
+                case '<':
+                    token = xml.substring(index, i);
+                    if (token.trim().length() > 0) {
+                        tokens.add(token);
+                    }
+                    index = i;
+                    break;
+                case '>':
+                    token = xml.substring(index, i + 1);
+                    if (token.trim().length() > 0) {
+                        tokens.add(token);
+                    }
+                    index = i + 1;
+                    break;
+            }
+        }
+
+        return tokens;
     }
 }

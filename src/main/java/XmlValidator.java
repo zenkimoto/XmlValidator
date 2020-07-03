@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class XmlValidator {
-    private XmlTokenizer tokenizer = new XmlTokenizer();
+    private final XmlTokenizer tokenizer = new XmlTokenizer();
 
     public boolean validate(String xml) {
         List<String> tags = tokenizer.parse(xml);

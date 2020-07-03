@@ -37,4 +37,15 @@ public class XmlTokenizerTests {
         assertEquals(result.get(0), "<book>");
         assertEquals(result.get(1), "</book>");
     }
+
+    @Test
+    public void shouldParseStringContentInXmlTags() {
+        List<String> result = sut.parse("<note>Hello World!</note>");
+
+        assertEquals(3, result.size());
+        assertEquals(result.get(0), "<note>");
+        assertEquals(result.get(1), "Hello World!");
+        assertEquals(result.get(2), "</note>");
+    }
+
 }
