@@ -1,22 +1,21 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class XmlValidator {
+    private XmlTokenizer tokenizer = new XmlTokenizer();
+
     public boolean validate(String xml) {
-        List<String> tags = tokenize(xml);
+        List<String> tags = tokenizer.parse(xml);
+
+        debugPrintTokens(tags);
 
         return tags.get(1).equals("/" + tags.get(0));
     }
 
-    private List<String> tokenize(String xml) {
-        String[] ar = xml.split(">");
-        List<String> tags = Arrays.asList(ar);
-
-        return tags.stream()
-                .map(String::trim)
-                .map(s -> s.replaceFirst("<", ""))
-                .collect(Collectors.toList());
+    private void debugPrintTokens(List<String> tokens) {
+        System.out.println("---------------------");
+        for (String token : tokens) {
+            System.out.println(token);
+        }
+        System.out.println("---------------------");
     }
 }
