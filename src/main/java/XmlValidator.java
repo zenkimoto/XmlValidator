@@ -1,11 +1,25 @@
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * The XmlValidator class validates simple XML markup.  It checks for
+ * matching start and end tags and ignores invalid simple errors.
+ * There are no DTD doctype validations.
+ * Note: This is a toy class!
+ */
 public class XmlValidator {
     private final XmlTokenizer tokenizer = new XmlTokenizer();
 
+    /**
+     * Validates an XML string for matching start and end tags.
+     *
+     * @param xml Xml string to validate
+     * @return True when XML is validated successfully otherwise false.
+     */
     public boolean validate(String xml) {
         List<String> tags = tokenizer.parse(xml);
+
+        if (tags.size() == 0) return false;
 
         debugPrintTokens(tags);
 

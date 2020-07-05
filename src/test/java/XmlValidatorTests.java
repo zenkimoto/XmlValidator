@@ -18,49 +18,49 @@ public class XmlValidatorTests {
     }
 
     @Test
-    public void shouldValidateSimpleXml() {
+    public void shouldReturnTrue_WhenSingleStartAndEndTag() {
         boolean result = sut.validate("<book></book>");
 
         assertTrue(result);
     }
 
     @Test
-    public void shouldValidateInvalidXml_WhenTagDoesNotClose() {
+    public void shouldReturnFalse_WhenTagDoesNotClose() {
         boolean result = sut.validate("<book");
 
         assertFalse(result);
     }
 
     @Test
-    public void shouldValidateInvalidXml_WhenNoTagName() {
+    public void shouldReturnFalse_WhenNoTagNameProvided() {
         boolean result = sut.validate("<>");
 
         assertFalse(result);
     }
 
     @Test
-    public void shouldValidateInvalidXml_whenTagsDoNotMatch() {
+    public void shouldReturnFalse_whenOpenAndCloseTagsDoNotMatch() {
         boolean result = sut.validate("<book></bool>");
 
         assertFalse(result);
     }
 
     @Test
-    public void shouldIgnoreSpacesBeforeAndAfterTags() {
+    public void shouldIgnoreSpaces_WhenSpacesAreBeforeAndAfterTags() {
         boolean result = sut.validate("         <book>   </book>  ");
 
         assertTrue(result);
     }
 
     @Test
-    public void shouldValidateTagsWithContent() {
+    public void shouldReturnTrue_WhenTagsHaveContent() {
         boolean result = sut.validate("    <note>Hello World!</note> ");
 
         assertTrue(result);
     }
 
     @Test
-    public void shouldValidateXmlWithChildNodes() {
+    public void shouldReturnTrue_WhenXmlContainsChildNodes() {
         String xml = "<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>";
 
         boolean result = sut.validate(xml);
@@ -69,7 +69,8 @@ public class XmlValidatorTests {
     }
 
     @Test
-    public void shouldValidateInvalidXmlWithChildNodes() {
+    public void shouldReturnFalse_WhenChildNodesDoNotMatchOpenAndCloseTags() {
+        // Note: <from> does not match </Ffrom>
         String xml = "<note><to>Tove</to><from>Jani</Ffrom><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>";
 
         boolean result = sut.validate(xml);
@@ -77,12 +78,17 @@ public class XmlValidatorTests {
         assertFalse(result);
     }
 
+    /**
+     * OPTIONAL: EXTRA CREDIT!
+     */
+    /*
     @Test
-    public void shouldValidateTagsWithAttributes() {
+    public void shouldReturnTrue_WhenTagsHaveAttributes() {
         String xml = "<note id=\"1234\" category=\"todo\"><to>Tove</to><from>Jani</from><heading type=\"header\">Reminder</heading><body>Don't forget me this weekend!</body></note>";
 
         boolean result = sut.validate(xml);
 
         assertTrue(result);
     }
+    */
 }
