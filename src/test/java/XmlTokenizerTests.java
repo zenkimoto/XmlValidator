@@ -48,14 +48,38 @@ public class XmlTokenizerTests {
     }
 
     @Test
-    public void shouldIgnoreUnclosedTags() {
-        List<String> result = sut.parse("<note<Hello World!</note>");
+    public void shouldReturnTokens_whenSingleCharacterContent() {
+        List<String> result = sut.parse("<a>b</a>");
 
-        for (String s : result) {
-            System.out.println(s);
-        }
+        assertEquals(3, result.size());
+        assertEquals(result.get(0), "<a>");
+        assertEquals(result.get(1), "b");
+        assertEquals(result.get(2), "</a>");
+    }
+
+    @Test
+    public void shouldIgnoreEmptyXmlTag_whenNoTagName() {
+        List<String> result = sut.parse("<>");
 
         assertEquals(0, result.size());
     }
+
+    @Test
+    public void shouldReturnNoTokens_WhenUnclosedTag() {
+        List<String> result = sut.parse("<book");
+
+        assertEquals(0, result.size());
+    }
+
+//    @Test
+//    public void shouldIgnoreUnclosedTags() {
+//        List<String> result = sut.parse("<note<Hello World!</note>");
+//
+//        for (String s : result) {
+//            System.out.println(s);
+//        }
+//
+//        assertEquals(0, result.size());
+//    }
 
 }

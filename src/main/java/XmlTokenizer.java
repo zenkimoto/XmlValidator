@@ -15,6 +15,7 @@ public class XmlTokenizer {
                     index = i;
                     break;
                 case '>':
+                    if (index + 1 == i) break;
                     addTokenToTokenList(tokens, xml, index, i + 1);
                     index = i + 1;
                     break;
