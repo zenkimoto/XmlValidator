@@ -47,4 +47,15 @@ public class XmlTokenizerTests {
         assertEquals(result.get(2), "</note>");
     }
 
+    @Test
+    public void shouldIgnoreUnclosedTags() {
+        List<String> result = sut.parse("<note<Hello World!</note>");
+
+        for (String s : result) {
+            System.out.println(s);
+        }
+
+        assertEquals(0, result.size());
+    }
+
 }

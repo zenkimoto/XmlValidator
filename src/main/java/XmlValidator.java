@@ -15,7 +15,7 @@ public class XmlValidator {
         for (String tag : tags) {
             start_stack.push(tag);
         }
-        
+
         for (int i = 0; i < tags.size(); i++) {
             String tag = start_stack.pop();
 
@@ -24,7 +24,7 @@ public class XmlValidator {
             } else if (isStartTag(tag)) {
                 String endTag = end_stack.pop();
 
-                if (!endTag.equals("</" + tag.substring(1))) {
+                if (!endTag.equals("</" + getTagName(tag) + ">")) {
                     return false;
                 }
             }
@@ -39,6 +39,12 @@ public class XmlValidator {
 
     private boolean isStartTag(String tag) {
         return tag.charAt(0) == '<' && tag.charAt(1) != '/' && tag.charAt(tag.length() - 1) == '>';
+    }
+
+    private String getTagName(String tag) {
+        String[] result = tag.substring(1, tag.length() - 1).split(" ");
+
+        return result[0];
     }
 
     private void debugPrintTokens(List<String> tokens) {
