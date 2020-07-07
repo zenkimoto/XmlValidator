@@ -21,8 +21,6 @@ public class XmlValidator {
 
         if (tokens.size() == 0) return false;
 
-        debugPrintTokens(tokens);
-
         return performXmlTokenValidation(tokens);
     }
 
@@ -90,13 +88,5 @@ public class XmlValidator {
         String[] result = tag.substring(1, tag.length() - 1).split(" ");
 
         return result[0];
-    }
-
-    private void debugPrintTokens(List<String> tokens) {
-        System.out.println("---------------------");
-        for (String token : tokens) {
-            System.out.println(token);
-        }
-        System.out.println("---------------------");
     }
 }
