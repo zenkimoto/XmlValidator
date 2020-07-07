@@ -17,28 +17,34 @@ public class XmlValidator {
      * @return True when XML is validated successfully otherwise false.
      */
     public boolean validate(String xml) {
-        List<String> tags = tokenizer.parse(xml);
+        List<String> tokens = tokenizer.parse(xml);
 
-        if (tags.size() == 0) return false;
+        if (tokens.size() == 0) return false;
 
-        debugPrintTokens(tags);
+        debugPrintTokens(tokens);
 
+        return performXmlTokenValidation(tokens);
+    }
+
+    private boolean performXmlTokenValidation(List<String> tokens) {
         Stack<String> start_stack = new Stack<>();
         Stack<String> end_stack = new Stack<>();
 
-        for (String tag : tags) {
-            start_stack.push(tag);
+        for (String token : tokens) {
+            start_stack.push(token);
         }
 
-        for (int i = 0; i < tags.size(); i++) {
-            String tag = start_stack.pop();
+        while (!start_stack.empty()) {
+            String token = start_stack.pop();
 
-            if (isEndTag(tag)) {
-                end_stack.push(tag);
-            } else if (isStartTag(tag)) {
+            if (isEndTag(token)) {
+                end_stack.push(token);
+            } else if (isStartTag(token)) {
                 String endTag = end_stack.pop();
 
-                if (!endTag.equals("</" + getTagName(tag) + ">")) {
+                boolean endTagMatchesStartTag = endTag.equals("</" + getTagName(token) + ">");
+
+                if (!endTagMatchesStartTag) {
                     return false;
                 }
             }
@@ -47,15 +53,40 @@ public class XmlValidator {
         return true;
     }
 
+    /**
+     * Checks to see if the XML tag is an end tag.  i.e. </tagname>
+     * @param tag Tag string to validate
+     * @return boolean indicating a valid end tag
+     */
     private boolean isEndTag(String tag) {
+        if (tag.length() <= 3) return false;
+
         return tag.charAt(0) == '<' && tag.charAt(1) == '/' && tag.charAt(tag.length() - 1) == '>';
     }
 
+    /**
+     * Checks to see if the XML tag is a start tag.  i.e. <tagname>
+     * @param tag Tag string to validate
+     * @return boolean indicating a valid start tag
+     */
     private boolean isStartTag(String tag) {
+        if (tag.length() <= 2) return false;
+
         return tag.charAt(0) == '<' && tag.charAt(1) != '/' && tag.charAt(tag.length() - 1) == '>';
     }
 
+    /**
+     * Gets the tag name of a start tag when there are attributes.
+     * Example:
+     *   <tagname id="tag">
+     *
+     * The method will return "tagname"
+     * @param tag Tag string to extract the tag name
+     * @return tag name string
+     */
     private String getTagName(String tag) {
+        if (tag.length() <= 2) return "";
+
         String[] result = tag.substring(1, tag.length() - 1).split(" ");
 
         return result[0];

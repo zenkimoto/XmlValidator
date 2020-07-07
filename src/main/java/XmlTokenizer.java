@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The XML Tokenizer class parses an XML string into nodes and content.
+ * All spaces that are not part of content are ignored.
+ */
 public class XmlTokenizer {
     public List<String> parse(String xml) {
         ArrayList<String> tokens = new ArrayList<>();
@@ -11,12 +15,12 @@ public class XmlTokenizer {
 
             switch (ch) {
                 case '<':
-                    addTokenToTokenList(tokens, xml, index, i);
+                    addTokenIfValid(tokens, xml, index, i);
                     index = i;
                     break;
                 case '>':
                     if (index + 1 == i) break;
-                    addTokenToTokenList(tokens, xml, index, i + 1);
+                    addTokenIfValid(tokens, xml, index, i + 1);
                     index = i + 1;
                     break;
             }
@@ -25,9 +29,19 @@ public class XmlTokenizer {
         return tokens;
     }
 
-    private void addTokenToTokenList(ArrayList<String> tokens, String xml, int startIndex, int endIndex) {
+    /**
+     * Adds a token to a token result list if the token appears to be a valid token.
+     *
+     * @param tokens ArrayList of tokens.  This is the result array list and valid tokens will be added here.
+     * @param xml Original XML string
+     * @param startIndex Start index of the candidate token
+     * @param endIndex End index of the candidate token
+     */
+    private void addTokenIfValid(ArrayList<String> tokens, String xml, int startIndex, int endIndex) {
         String token = xml.substring(startIndex, endIndex);
-        if (token.trim().length() > 0) {
+        boolean isValidLength = token.trim().length() > 0;
+
+        if (isValidLength) {
             tokens.add(token);
         }
     }
