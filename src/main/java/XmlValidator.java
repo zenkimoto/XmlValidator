@@ -24,6 +24,11 @@ public class XmlValidator {
         return performXmlTokenValidation(tokens);
     }
 
+    /**
+     * Performs simple XML validation based on parsed xml tokens.
+     * @param tokens List of Xml tokens
+     * @return True when XML is validated successfully otherwise false.
+     */
     private boolean performXmlTokenValidation(List<String> tokens) {
         Stack<String> start_stack = new Stack<>();
         Stack<String> end_stack = new Stack<>();

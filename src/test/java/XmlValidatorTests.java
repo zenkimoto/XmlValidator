@@ -78,10 +78,6 @@ public class XmlValidatorTests {
         assertFalse(result);
     }
 
-    /**
-     * OPTIONAL: EXTRA CREDIT!
-     */
-    /*
     @Test
     public void shouldReturnTrue_WhenTagsHaveAttributes() {
         String xml = "<note id=\"1234\" category=\"todo\"><to>Tove</to><from>Jani</from><heading type=\"header\">Reminder</heading><body>Don't forget me this weekend!</body></note>";
@@ -90,5 +86,4 @@ public class XmlValidatorTests {
 
         assertTrue(result);
     }
-    */
 }
