@@ -39,10 +39,24 @@ public class XmlTokenizer {
      */
     private void addTokenIfValid(ArrayList<String> tokens, String xml, int startIndex, int endIndex) {
         String token = xml.substring(startIndex, endIndex);
-        boolean isValidLength = token.trim().length() > 0;
 
-        if (isValidLength) {
+        if (isValidToken(token)) {
             tokens.add(token);
         }
+    }
+
+    /**
+     * Determines if a token is valid using basic checks.
+     *
+     * @param token Xml token to validate
+     * @return True if the token is valid
+     */
+    private boolean isValidToken(String token) {
+        boolean isValidLength = token.trim().length() > 0;
+
+        boolean isValidTag = isValidLength && token.charAt(0) == '<' && token.charAt(token.length() - 1) == '>';
+        boolean isValidNonTag = isValidLength && token.charAt(0) != '<' && token.charAt(token.length() - 1) != '>';
+
+        return isValidTag || isValidNonTag;
     }
 }
